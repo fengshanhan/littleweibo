@@ -1,0 +1,146 @@
+{% extends "account_app/base.html" %}
+
+{% block title %}
+	Profile
+{% endblock %}
+
+{% block body %}
+    <h1 id="head" style="text-align: center;color: darkslategray;margin-top:80px;">Username: {{ user.username  }}</h1>
+    <p style="text-align: center;"><a href="{% url 'account_app:register' %}">Click here to logout</a></p>
+    <div id="changepsw_frame">
+	<h1 id="head">Password update</h1>
+    <form id="Form1" name = "password_form" method="POST" onsubmit="return check2()">
+        {% csrf_token %}
+        <p style="color: red"> {{ error }} </p>
+
+        <div id = "tip_4" style="color: red"></div>
+        <div style="color: red">  {% if data %} {{ data }} {% endif %}</div>
+        <div style="color: red">{% if form.oldpassword.errors %}{{ form.oldpassword.errors }}<br/>{% endif %}</div>
+        <p><label class="label_input">Old Password</label>
+        <input id = "oldpassword" name = "oldpassword" type = "password" placeholder="input former password" class="text_field"></p>
+
+        <div id = "tip_2" style="color: red"></div>
+        <div id = "tip_3" style="color: red"></div>
+        <div style="color: red">{% if form.password1.errors %}{{ form.password1.errors }}<br/>{% endif %}</div>
+        <p><label class="label_input">Password</label>
+        <input id = "password1" name="password1" type="password" placeholder="input new password" class="text_field"></p>
+
+
+        <div style="color: red">{% if form.password2.errors %}{{ form.password2.errors }}<br/>{% endif %}</div>
+        <p><label class="label_input">Password Confirmation</label>
+            <input id = "password2" name="password2" type="password" placeholder="input password confirmation" class="text_field"></p>
+        <p>
+            <div id="login_control">
+                <button id="btn_register" type="submit" name = "change_password">Change</button>
+            </div>
+        </p>
+    </form>
+    </div>
+
+    <div id="changeemail_frame">
+    <h1 id="head">Email update</h1>
+    <form id="Form2" name = "email_form" method="POST" onsubmit="return check1()">
+        {% csrf_token %}
+         <p style="color: red"> {{ error }} </p>
+        <div id = "tip_1" style="color: red"></div>
+         <div style="color: red">{% if form.new_email.errors %}{{ form.new_email.errors }}<br/>{% endif %}</div>
+        <p><label class="label_input">New Email</label>
+        <input id = "new_email" name = "new_email" type = "text" placeholder="input new email" class="text_field"></p>
+        <p>
+       <!--<input class = "btn_login" type="button" onclick = tz() value="Back" />-->
+        <!--<input class = "btn_login" type="submit" name = "change_email" value="Go" />-->
+            <div id="login_controla">
+             <button id="btn_registera" type="submit" name = "change_email">Change</button>
+              </div>
+        </p>
+    </form>
+    </div>
+
+
+    <script type="text/javascript">
+    var Form1 = document.getElementById('Form1');
+    var Form2 = document.getElementById('Form2');
+    var sub1 = document.getElementById('btn_register');
+    var sub2 = document.getElementById('btn_registera');
+    var email_flag = false;
+    var psw_flag1 = false;
+    var psw_flag2 = false;
+    sub2.onclick = function(){//email
+        //check email
+        var email = Form2.new_email.value;
+        if(email != "") {
+            varreg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+            isok= varreg.test(email);
+            if(!isok) {
+                var div = document.getElementById("tip_1");
+                div.textContent = "enter a valid email address.";
+                email.focus();
+            }else {
+                //loginForm.submit();
+                email_flag = true;
+            }
+        }else {
+            var div = document.getElementById("tip_1");
+            div.textContent = "enter a valid email address.";
+            email.focus();
+        }
+    }
+
+    sub1.onclick=function(){//password
+         //check psw
+        var oldpassword = Form1.oldpassword.value;
+        var password = Form1.password1.value;
+        var password_confirm = Form1.password2.value;
+
+        if(oldpassword == ""){
+            var div = document.getElementById("tip_2");
+            div.textContent = "";
+            var div = document.getElementById("tip_3");
+            div.textContent = "";
+            var div = document.getElementById("tip_4");
+            div.textContent = "invalid password.";
+            oldpassword.focus();
+        }else {
+            psw_flag1 = true;
+        }
+
+
+        if(password == password_confirm){
+            if(password.length < 6){
+                var div = document.getElementById("tip_4");
+                div.textContent = "";
+                var div = document.getElementById("tip_3");
+                div.textContent = "";
+                var div = document.getElementById("tip_2");
+                div.textContent = "password too short.";
+                password.focus();
+            }else {
+                psw_flag2 = true;
+            }
+
+        }else {
+            var div = document.getElementById("tip_4");
+            div.textContent = "";
+            var div = document.getElementById("tip_2");
+            div.textContent = "";
+            var div = document.getElementById("tip_3");
+            div.textContent = "password mismatch.";
+            password_confirm.focus();
+        }
+    }
+
+    function check1(){
+        if(email_flag)
+            return true;
+        else
+            return false;
+    }
+    function check2(){
+        if(psw_flag1&&psw_flag2)
+            return true;
+        else
+            return false;
+    }
+    </script>
+
+{% endblock %}

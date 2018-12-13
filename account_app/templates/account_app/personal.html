@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Personal homepage</title>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
+        <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
+    </head>
+    <body>
+        <ul>
+            <li><a href="{% url 'account_app:home' %}">Homepage</a></li>
+            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li>
+            <li><a href="{% url 'account_app:message' %}">Message</a></li>
+            <li><a class="active" href="{% url 'account_app:personal' %}">Personal homepage</a></li>
+            <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
+        </ul>
+
+
+        <!--    在这里添加html代码    -->
+
+
+    </body>
+
+</html>

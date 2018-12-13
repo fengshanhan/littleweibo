@@ -1,0 +1,21 @@
+{% extends "account_app/base.html" %}
+
+{% block title %}
+	Me
+{% endblock %}
+
+{% block body %}
+    <div id="login_frame" >
+
+        <h1 id="head"> email: {{ user.email  }} </h1>
+
+        <h1 id="head"> creation date: {{ user.created_at  }} </h1>
+
+
+    </div>
+    <!------
+    <a href="{% url 'account_app:home'  %}">to home</a>
+    <a href="{% url 'account_app:logout'  %}">log out</a>
+    --------->
+
+{% endblock %}

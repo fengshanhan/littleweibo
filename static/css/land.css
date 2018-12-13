@@ -1,0 +1,51 @@
+
+.picture{
+	width:100%;
+	height:100%;
+	background-image: url("../imgs/bear.jpeg");
+    background-size: cover;
+    background-position:center;
+}
+
+/*div.classname a{样式设置}
+
+补充其他：
+div.classname a:link{样式设置}
+div.classname a:visited{样式设置}
+div.classname a:hover{样式设置}
+div.classname a:active{样式设置} */
+
+
+
+.clickButton a{
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+	/* color:#001;*/
+	/*background-color:none;  */
+	float:left;
+	width:130px;
+	height:30px;
+	font-size:26px; /*字体大小 */
+	color:black; /*字体颜色 */
+	text-decoration:underline; /*字体下划线等；underline下划线，overline 上划线，line-through线在中间 */
+	cursor:pointer; /*鼠标在字上时显示小手 */
+}
+
+.name{
+	float:left;
+	margin-left:30px;
+	margin-top:20px;
+	font-size:100px;
+	/*background-color:none;*/
+
+}
+
+
+
+
+

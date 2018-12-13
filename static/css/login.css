@@ -1,0 +1,166 @@
+body {
+    background-color: #B0EAFE;
+    background-size: 100%;
+    background-image: url("../imgs/bear.jpeg");
+    background-repeat: no-repeat;
+    #background-attachment:fixed;
+}
+
+#login_frame {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    /*left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;*/
+    left:50%;
+    top:50%;
+    margin-left:-200px;
+    margin-top:-150px;
+    background-color: rgba(240, 255, 255, 0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+
+#changepsw_frame {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+
+    left:50%;
+    top:40%;
+    margin-left:-200px;
+    margin-top:150px;
+
+    background-color: rgba(240, 255, 255, 0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+#changeemail_frame {
+    /*width: 60%;
+    height: 50%;*/
+    width: 400px;
+    height: 230px;
+    position: absolute;
+
+    left:50%;
+    top:40%;
+    margin-left:-200px;
+    margin-top:-150px;
+
+    background-color: rgba(240, 255, 255, 0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+
+form p > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#head {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: blueviolet;
+}
+
+.label_input {
+    font-size: 14px;
+
+    width: 65px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3BD9FF;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.text_field {
+    width: 278px;
+    height: 28px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0;
+}
+
+#btn_login {
+    font-size: 14px;
+
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3BD9FF;
+    border-radius: 6px;
+    border: 0;
+    cursor:pointer;
+
+    float: left;
+}
+
+
+#btn_register {
+    font-size: 14px;
+
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3BD9FF;
+    border-radius: 6px;
+    border: 0;
+    cursor:pointer;
+
+    float: bottom;
+
+}
+
+
+#btn_registera {
+    font-size: 14px;
+
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3BD9FF;
+    border-radius: 6px;
+    border: 0;
+    cursor:pointer;
+
+    float: bottom;
+
+}
+
+#forget_pwd {
+    font-size: 12px;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    float: right;
+    top: 6px;
+
+}
+
+#forget_pwd:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+#login_control {
+    padding: 0 28px;
+}

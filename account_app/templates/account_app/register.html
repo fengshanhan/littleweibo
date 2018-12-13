@@ -1,0 +1,139 @@
+{% extends "account_app/base.html" %}
+
+{% block title %}
+	Register
+{% endblock %}
+
+{% block body %}
+    <div id="login_frame">
+	<h1 id="head">Register</h1>
+
+    <form id="Form" action="" method="POST" onsubmit="return check();">
+		{% csrf_token %} <!-- 在django的表单里，加上这个是为了防止跨站攻击 -->
+
+        <p style="color: red"> {{ error }} </p>
+        <div class = "error" id="text1" style="color: red">
+            {% if form.username.errors %}{{ form.username.errors }}<br/>{% endif %}
+        </div>
+        <p><label class="label_input">Username</label><input type="text" name="username" placeholder="please input username" class="text_field"></p>
+
+        <div class = "error" id="text2" style="color: red">
+            {% if form.email.errors %}{{ form.email.errors }}<br/>{% endif %}
+        </div>
+        <p><label class="label_input">Email</label><input type="text" name="email" placeholder="please input email" class="text_field"></p>
+
+        <div class = "error" id="text3" style="color: red">
+            {% if form.password1.errors %}{{ form.password1.errors }}<br/>{% endif %}
+            {% if form.password2.errors %}{{ form.password2.errors }}<br/>{% endif %}
+        </div>
+        <p><label class="label_input">Password</label><input type="password" name="password1" placeholder="please input password" class="text_field"></p>
+        <p><label class="label_input">Password Confirmation</label><input type="password" name="password2" placeholder="please input password again" class="text_field"></p>
+
+        <div id="login_control">
+        <button id="btn_register" type="submit">Register</button>
+        </div>
+	</form>
+    </div>
+
+
+    <script type="text/javascript">
+    var Form = document.getElementById('Form');
+    var sub = document.getElementById('btn_register');
+    name_flag = false;
+    var email_flag = false;
+    var psw_flag = false;
+    sub.onclick = function(){
+        //check username
+        var username = Form.username.value;
+        if(username != "") {
+            varreg = /^[a-z]+$/
+            isok= varreg.test(username);
+            if(!isok) {
+                var div = document.getElementById("text2");
+                div.textContent = "";
+                var div = document.getElementById("text3");
+                div.textContent = "";
+                var div = document.getElementById("text1");
+                div.textContent = "username has illegal characters.";
+                email.focus();
+            }else {
+                //loginForm.submit();
+                name_flag = true;
+            }
+        }else {
+            var div = document.getElementById("text2");
+                div.textContent = "";
+                var div = document.getElementById("text3");
+                div.textContent = "";
+            var div = document.getElementById("text1");
+            div.textContent = "username has illegal characters.";
+            email.focus();
+        }
+
+        //check email
+        var email = Form.email.value;
+        if(email != "") {
+            varreg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+            isok= varreg.test(email);
+            if(!isok) {
+                var div = document.getElementById("text1");
+                div.textContent = "";
+                var div = document.getElementById("text3");
+                div.textContent = "";
+                var div = document.getElementById("text2");
+                div.textContent = "enter a valid email address.";
+                email.focus();
+            }else {
+                //loginForm.submit();
+                email_flag = true;
+            }
+        }else {
+            var div = document.getElementById("text1");
+                div.textContent = "";
+                var div = document.getElementById("text3");
+                div.textContent = "";
+            var div = document.getElementById("text2");
+            div.textContent = "enter a valid email address.";
+            email.focus();
+        }
+
+        //check psw
+        var password = Form.password1.value;
+        var password_confirm = Form.password2.value;
+        if(password == password_confirm){
+
+                if(password.length < 6){
+                    var div = document.getElementById("text1");
+                div.textContent = "";
+                var div = document.getElementById("text2");
+                div.textContent = "";
+                    var div = document.getElementById("text3");
+                    div.textContent = "password too short.";
+                    password.focus();
+                }else {
+                    psw_flag = true;
+                }
+
+        }else {
+            var div = document.getElementById("text1");
+                div.textContent = "";
+                var div = document.getElementById("text2");
+                div.textContent = "";
+            var div = document.getElementById("text3");
+            div.textContent = "password mismatch.";
+            password_confirm.focus();
+        }
+
+    }
+    function check(){
+        if(email_flag&&psw_flag&&name_flag){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    </script>
+
+{% endblock %}
