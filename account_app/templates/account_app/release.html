@@ -19,9 +19,10 @@
 
         <!--    在这里添加html代码    -->
         <div class = "flex-container">
-        <form class = "flex-item"  method="POST" onsubmit="return check();">
+        <form class = "flex-item" enctype="multipart/form-data" method="POST" onsubmit="return check();">
             {% csrf_token %}
             <h1>Releasing Micro-blog</h1>
+            <input type="file" name="img">
              <div id = "tip_1" class="tip_1"></div>
             <div class = "error">{% if form.content.errors %}{{ form.content.errors }}<br/>{% endif %}</div>
             <h2>Enter your content:</h2>

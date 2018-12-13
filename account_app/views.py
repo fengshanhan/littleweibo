@@ -123,14 +123,13 @@ def release(request):
         if form.is_valid():
             content = form.cleaned_data['content']
             at = form.cleaned_data['at']
+            image = request.FILES.get('img')
             weiboDate = datetime.datetime.now().strftime('%Y-%m-%d');
-            obj = models.weibo.objects.create(weiboId='432',
-                                              userName='zzz',content=content,
-                                              weiboDate=weiboDate,commentNum=0,
-                                              likeNum=0,transmitNum=0,
-                                              state=0,transmitCon=at)
+            obj = models.weibo.objects.create(weiboId='4328',userName='zzxz',content=content,
+                                              weiboDate=weiboDate,commentNum=0,likeNum=0,transmitNum=0,
+                                              state=0,transmitCon=at,image=image)
             obj.save()
-            return render(request, 'account_app/personal.html')
+            return render(request, 'account_app/showing.html')
     else:
         return render(request, 'account_app/release.html')
 

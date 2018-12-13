@@ -39,7 +39,7 @@ class weibo(models.Model):
     state = models.IntegerField(null=False) # 是否转发， 0：自己发的 1：转发的
     transmitCon = models.TextField(null=True, blank=True) # 转发评论的内容， 允许为空
     # upload_to='upload'表示用户上传数据存储的位置，这里需要注意：在数据库中实际保存的并不是文件，而是文件存放的路径
-    image =  models.ImageField(upload_to = upload_to2, blank=True, null=True) # 附带的图片
+    image = models.ImageField(upload_to='img')
 
 # 评论信息
 class Comment(models.Model):
