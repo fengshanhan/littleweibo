@@ -5,10 +5,10 @@ from django.contrib.auth.backends import ModelBackend  # 修改验证模块
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required  #装饰器： 必须登录后才访问
 
-from .forms import RegistrationForm, LoginForm, PasswordUpdateForm, EmailUpdateForm
+from .forms import RegistrationForm, LoginForm, PasswordUpdateForm, EmailUpdateForm,ReleaseForm
 from .models import User
-
-
+from account_app import models
+import datetime
 # 重写验证函数，让用户可以用邮箱登录
 # setting 里要有对应的配置
 class CustomBackend(ModelBackend):
@@ -118,7 +118,21 @@ def home(request):
 
 # 发布微博页
 def release(request):
-    return render(request, 'account_app/release.html')
+    if request.method == 'POST':
+        form = ReleaseForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            at = form.cleaned_data['at']
+            weiboDate = datetime.datetime.now().strftime('%Y-%m-%d');
+            obj = models.weibo.objects.create(weiboId='2333',
+                                              userName='zz',content=content,
+                                              weiboDate=weiboDate,commentNum=0,
+                                              likeNum=0,transmitNum=0,
+                                              state=0,transmitCon=at)
+            obj.save()
+            return render(request, 'account_app/personal.html')
+    else:
+        return render(request, 'account_app/release.html')
 
 # 消息页
 def message(request):
