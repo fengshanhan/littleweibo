@@ -19,7 +19,7 @@
 
         <!--    在这里添加html代码    -->
         <div class = "flex-container">
-        <form class = "flex-item"  method="POST" onsubmit="return checkContent();">
+        <form class = "flex-item"  method="POST" onsubmit="return check();">
             {% csrf_token %}
             <h1>Releasing Micro-blog</h1>
              <div id = "tip_1" class="tip_1"></div>
@@ -32,6 +32,12 @@
         </form>
         </div>
     <script>
+        function check(){
+            return checkContent()&&checkAt();
+        }
+        function checkAt(){
+            return true;
+        }
         function checkContent(){
             content = document.getElementById("content");
             var reg =/^.{1,300}$/;

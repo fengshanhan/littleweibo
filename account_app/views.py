@@ -124,8 +124,8 @@ def release(request):
             content = form.cleaned_data['content']
             at = form.cleaned_data['at']
             weiboDate = datetime.datetime.now().strftime('%Y-%m-%d');
-            obj = models.weibo.objects.create(weiboId='2333',
-                                              userName='zz',content=content,
+            obj = models.weibo.objects.create(weiboId='432',
+                                              userName='zzz',content=content,
                                               weiboDate=weiboDate,commentNum=0,
                                               likeNum=0,transmitNum=0,
                                               state=0,transmitCon=at)
