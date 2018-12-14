@@ -4,7 +4,7 @@
     <head>
         <title>Release micro-blog</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
-
+        <link rel="stylesheet" href="/static/css/release.css">
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
@@ -18,8 +18,42 @@
 
 
         <!--    在这里添加html代码    -->
-
-
+        <div class = "flex-container">
+        <form class = "flex-item" enctype="multipart/form-data" method="POST" onsubmit="return check();">
+            {% csrf_token %}
+            <h1>Releasing Micro-blog</h1>
+            <input type="file" name="img">
+             <div id = "tip_1" class="tip_1"></div>
+            <div class = "error">{% if form.content.errors %}{{ form.content.errors }}<br/>{% endif %}</div>
+            <h2>Enter your content:</h2>
+            <input id = "content" name="content" /><br/>
+            <h3>If you want to @ someone,use;to split:</h3>
+            <input id = "at" name="at" /><br/>
+            <input class = "but" type="submit" value="Send" />
+        </form>
+        </div>
+    <script>
+        function check(){
+            return checkContent()&&checkAt();
+        }
+        function checkAt(){
+            return true;
+        }
+        function checkContent(){
+            content = document.getElementById("content");
+            var reg =/^.{1,300}$/;
+            if(!reg.test(content.value)){
+                alert("failed");
+                if(content.value == ""){
+                    document.getElementById('tip_1').innerHTML = "Please input content!";
+                }else{
+                    document.getElementById('tip_1').innerHTML = "Content too long!";
+                }
+                return false;
+            }else{
+                return true;
+            }
+        }
+    </script>
     </body>
-
 </html>
