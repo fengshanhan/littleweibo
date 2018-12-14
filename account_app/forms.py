@@ -10,8 +10,8 @@ from .models import User
 class CustomBackend(ModelBackend):
     def authenticate(self, email=None, password=None, **kwargs):
         try:
-            # user = User.objects.get(Q(username=username) | Q(email=username)) #既可以邮箱也可以用户名登录
-            user = User.objects.get(Q(email=email))  #只能邮箱登录
+            user = User.objects.get(Q(username=username) | Q(email=username)) #既可以邮箱也可以用户名登录
+            #user = User.objects.get(Q(email=email))  #只能邮箱登录
             if user.check_password(password):
                 return user
         except Exception as e:
@@ -63,42 +63,11 @@ class RegistrationForm(forms.Form):
             return password2
 
 
-class LoginForm(forms.Form):
-
-    email = forms.EmailField(label='Email')
-    password = forms.CharField(label='Password')
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        existuser = User.objects.filter(email=email)
-        try:
-            existuser = User.objects.get(email=email)
-        except User.DoesNotExist:
-            existuser = None
-        if not existuser:
-            raise forms.ValidationError("email not found.")
-        return email
-
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        email = self.cleaned_data.get('email')
-        if password is None:
-            raise forms.ValidationError("password is invalid.")
-        existuser = User.objects.filter(email=email)
-        authentication = CustomBackend()
-        auth_user = authentication.authenticate(email=email, password=password)  # 验证user
-
-        if existuser:
-            if not auth_user:
-                raise forms.ValidationError("password is invalid.")
-
-        return password
-
 
 class PasswordUpdateForm(forms.Form):
-    oldpassword = forms.CharField(label='Old Password')
+    oldpassword = forms.CharField(label='OldPassword')
     password1 = forms.CharField(label='Password')
-    password2 = forms.CharField(label='Password Confirmation')
+    password2 = forms.CharField(label='Confirm')
 
     def clean_password1(self):#验证新密码是否正确
         oldpassword = self.cleaned_data.get('oldpassword')

@@ -1,13 +1,19 @@
-{% extends "account_app/base.html" %}
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"/>
+        <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
+    </head>
+    <body>
 
-{% block title %}
-	Profile
-{% endblock %}
-
-{% block body %}
+<div>
     <div class="bg bg-blur " ></div>
+
     <h1 class="content name-front">Username: {{ user.username  }}</h1>
-    <div id="logout"><a  href="{% url 'account_app:register' %}">Click here to logout</a></div>
+    <div id="logout"><a  href="{% url 'account_app:logout' %}">Click here to logout</a>  / <a  href="{% url 'account_app:home' %}">Cancel</a></div>
     <div id="changepsw_frame">
 	<h1 id="head">Password update</h1>
     <form id="Form1" name = "password_form" method="POST" onsubmit="return check2()">
@@ -57,7 +63,10 @@
     </form>
     </div>
 
+</div>
+    </body>
 
+</html>
     <script type="text/javascript">
     var Form1 = document.getElementById('Form1');
     var Form2 = document.getElementById('Form2');
@@ -143,5 +152,3 @@
             return false;
     }
     </script>
-
-{% endblock %}

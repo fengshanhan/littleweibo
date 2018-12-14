@@ -4,19 +4,23 @@
     <head>
         <title>Release micro-blog</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
         <link rel="stylesheet" href="/static/css/release.css">
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
+
+        <div class="bg bg-blur " ></div>
         <ul>
             <li><a href="{% url 'account_app:home' %}">Homepage</a></li>
             <li><a class="active" href="{% url 'account_app:release' %}">Release micro-blog</a></li>
             <li><a href="{% url 'account_app:message' %}">Message</a></li>
             <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li>
+            <li><a href="{% url 'account_app:profile' %}">Profile</a></li>
             <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
         </ul>
 
-
+<div class="center">
         <!--    在这里添加html代码    -->
         <div class = "flex-container">
         <form class = "flex-item" enctype="multipart/form-data" method="POST" onsubmit="return check();">
@@ -26,12 +30,13 @@
              <div id = "tip_1" class="tip_1"></div>
             <div class = "error">{% if form.content.errors %}{{ form.content.errors }}<br/>{% endif %}</div>
             <h2>Enter your content:</h2>
-            <input id = "content" name="content" /><br/>
+            <label >content</label><input id = "content" name="content" /><br/>
             <h3>If you want to @ someone,use;to split:</h3>
             <input id = "at" name="at" /><br/>
-            <input class = "but" type="submit" value="Send" />
+            <label >at</label><input class = "but" type="submit" value="Send" />
         </form>
         </div>
+</div>
     <script>
         function check(){
             return checkContent()&&checkAt();

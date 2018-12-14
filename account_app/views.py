@@ -5,7 +5,7 @@ from django.contrib.auth.backends import ModelBackend  # 修改验证模块
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required  #装饰器： 必须登录后才访问
 
-from .forms import RegistrationForm, LoginForm, PasswordUpdateForm, EmailUpdateForm,ReleaseForm
+from .forms import RegistrationForm,PasswordUpdateForm, EmailUpdateForm,ReleaseForm
 from .models import User
 from .models import weibo
 from account_app import models
@@ -13,10 +13,10 @@ import datetime
 # 重写验证函数，让用户可以用邮箱登录
 # setting 里要有对应的配置
 class CustomBackend(ModelBackend):
-    def authenticate(self, email=None, password=None, **kwargs):
+    def authenticate(self,  username=None, password=None, **kwargs):
         try:
-            # user = User.objects.get(Q(username=username) | Q(email=username)) #既可以邮箱也可以用户名登录
-            user = User.objects.get(Q(email=email))  #只能邮箱登录
+            user = User.objects.get(Q(username=username) | Q(email=username)) #既可以邮箱也可以用户名登录
+            #user = User.objects.get(Q(email=email))  #只能邮箱登录
             if user.check_password(password):
                 return user
         except Exception as e:
@@ -32,21 +32,29 @@ def land(request):
 
 def login(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            authentication = CustomBackend()
-            user = authentication.authenticate(email=email, password=password)  # 验证user
+        username = request.POST['username']
+        password = request.POST['password']
+        authentication = CustomBackend()
+        user = authentication.authenticate(username=username, password=password) #y验证user
+        if user is not None:
             user.backend = 'django.contrib.auth.backends.ModelBackend'  # 给user手动添加backend
-            loginfunc(request, user)  # 登录函数
-            request.session['useremail'] = email
+            loginfunc(request, user)# 重命名登录函数
+
+            e = None
+            e = User.objects.filter(username=username)
+            if e:
+                e0 = e[0]
+                request.session['useremail'] = e0.email
+            else:
+                request.session['useremail'] = username
+
             return redirect('account_app:home')  # 重定向的函数
         else:
-            return render(request, 'account_app/login.html', {'form': form})
+            return render(request, 'account_app/login.html', {'error': "username or password has error"})
 
     else:
-        return render(request, "account_app/login.html")
+        return render(request, 'account_app/login.html')
+
 
 
 def register(request):
@@ -115,11 +123,21 @@ def profile(request):
 
 # 主页
 def home(request):
-    return render(request, 'account_app/home.html')
+    weibos = models.weibo.objects.all().order_by('-weiboDate')
+    return render(request, 'account_app/home.html', {'weibos': weibos})
 
 # 发布微博页
+@login_required
 def release(request):
     if request.method == 'POST':
+        content = request.POST['content']
+        obj = models.weibo.objects.create(userName='zzxz', content=content, state=0)
+        obj.save()
+        return redirect("account_app:home")
+
+
+        '''
+        
         form = ReleaseForm(request.POST)
         if form.is_valid():
             content = form.cleaned_data['content']
@@ -130,15 +148,22 @@ def release(request):
                                               weiboDate=weiboDate,commentNum=0,likeNum=0,transmitNum=0,
                                               state=0,transmitCon=at,image=image)
             obj.save()
-            return render(request, 'account_app/showing.html')
-    else:
-        return render(request, 'account_app/release.html')
+            return render(request, 'account_app/release.html')
+        else:
+            return redirect("account_app:message")
+        
+        
+        '''
+
+    return render(request, 'account_app/release.html')
 
 # 消息页
+@login_required
 def message(request):
     return render(request, 'account_app/message.html')
 
 # 个人主页
+@login_required
 def personal(request):
     return render(request, 'account_app/personal.html')
 

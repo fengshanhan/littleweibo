@@ -1,0 +1,36 @@
+.frame{
+
+    width: 400px;
+    height: auto;
+    position: relative;
+    padding:10px 10px 10px 10px;
+    margin-bottom:10px;
+    background-color: rgba(240, 255, 255, 0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+.date{
+    font-size: 16px;
+    color: white;
+    position: relative;
+    float: right;
+    top:-15px;
+}
+.name{
+    font-size: 16px;
+    color: yellow;
+    position: relative;
+    float: left;
+    top:-20px;
+    left:-30px;
+}
+.content{
+    font-size: 16px;
+    color: white;
+    background-color: rgba(0,255,255, 0.5);
+    padding-top:20px;
+    padding-bottom:20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

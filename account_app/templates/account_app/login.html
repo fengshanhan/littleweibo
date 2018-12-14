@@ -13,12 +13,10 @@
 	    <form id="Form" action="" method="POST" onsubmit="return check();">
 		{% csrf_token %} <!-- 在django的表单里，加上这个是为了防止跨站攻击 -->
 
-            <div id="text1" style="color: red">{% if form.email.errors %}{{ form.email.errors }}<br/>{% endif %}
+            <div style="color: red">{{error }}<br/>
             </div>
-            <p><label class="label_input">Email</label><input type="text" name="email" placeholder="please input email" class="text_field"></p>
+            <p><label class="label_input">Username</label><input type="text" name="username" placeholder="please input email or username" class="text_field"></p>
 
-            <div  id="text2" style="color: red">{% if form.password.errors %}{{ form.password.errors }}<br/>{% endif %}
-            </div>
             <p><label class="label_input">Password</label><input type="password" name="password" placeholder="please input password" class="text_field"></p>
 
             <div id="login_control">
@@ -31,58 +29,5 @@
 
     </div>
 
-
-
-    <script type="text/javascript">
-    var email_flag = false;
-    var psw_flag = false;
-    var Form = document.getElementById('Form');
-        var sub = document.getElementById('btn_login');
-    sub.onclick = function(){
-        //check email
-        var email = Form.email.value;
-        if(email != "") {
-            varreg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-            isok= varreg.test(email);
-            if(!isok) {
-                var div = document.getElementById("text2");
-            div.textContent = "";
-                var div = document.getElementById("text1");
-                div.textContent = "Invalid email!";
-                email.focus();
-            }else {
-                //loginForm.submit();
-                email_flag = true;
-            }
-        }else {
-            var div = document.getElementById("text2");
-            div.textContent = "";
-            var div = document.getElementById("text1");
-            div.textContent = "Invalid email!";
-            email.focus();
-        }
-
-        //check psw
-        var password = Form.password.value;
-        if(password.length < 6){
-            var div = document.getElementById("text1");
-            div.textContent = "";
-            var div = document.getElementById("text2");
-            div.textContent = "password is invalid.";
-            password.focus();
-        }else {
-            psw_flag = true;
-        }
-    }
-    function check(){
-        if(email_flag&&psw_flag){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    </script>
 
 {% endblock %}
