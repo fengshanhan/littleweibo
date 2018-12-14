@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <div id="login_frame">
+    <div class="bg bg-blur " ></div>
+    <div id="reg_frame">
 	<h1 id="head">Register</h1>
 
     <form id="Form" action="" method="POST" onsubmit="return check();">
@@ -27,7 +28,7 @@
             {% if form.password2.errors %}{{ form.password2.errors }}<br/>{% endif %}
         </div>
         <p><label class="label_input">Password</label><input type="password" name="password1" placeholder="please input password" class="text_field"></p>
-        <p><label class="label_input">Password Confirmation</label><input type="password" name="password2" placeholder="please input password again" class="text_field"></p>
+        <p><label class="label_input">Confirm</label><input type="password" name="password2" placeholder="please input password again" class="text_field"></p>
 
         <div id="login_control">
         <button id="btn_register" type="submit">Register</button>
@@ -46,7 +47,7 @@
         //check username
         var username = Form.username.value;
         if(username != "") {
-            varreg = /^[a-z]+$/
+            varreg = /^[a-zA-Z0-9_-]+$/
             isok= varreg.test(username);
             if(!isok) {
                 var div = document.getElementById("text2");
@@ -73,7 +74,7 @@
         //check email
         var email = Form.email.value;
         if(email != "") {
-            varreg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+            varreg = /^\w+((-\w+)|(\.\w+))*\@[a-z0-9]+((\.|-)[a-z0-9]+)*\.[a-z0-9]+$/;
             isok= varreg.test(email);
             if(!isok) {
                 var div = document.getElementById("text1");
@@ -81,7 +82,7 @@
                 var div = document.getElementById("text3");
                 div.textContent = "";
                 var div = document.getElementById("text2");
-                div.textContent = "enter a valid email address.";
+                div.textContent = "enter a valid email address.Concern that email must be lowercase";
                 email.focus();
             }else {
                 //loginForm.submit();

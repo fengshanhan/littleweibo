@@ -27,7 +27,7 @@ class RegistrationForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        pattern = re.compile('^.[a-z]+$')
+        pattern = re.compile('^.[a-zA-Z0-9_-]+$')
         if not re.match(pattern, username):
             raise forms.ValidationError("username has illegal characters.")
         existuser = User.objects.filter(username=username)
@@ -38,9 +38,9 @@ class RegistrationForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        pattern = re.compile(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?")
+        pattern = re.compile(r"\"?([-a-z0-9.`?{}]+@\w+\.\w+)\"?")
         if not re.match(pattern, email):
-            raise forms.ValidationError("enter a valid email address.")
+            raise forms.ValidationError("enter a valid email address.Concern that email must be lowercase")
         existuser = User.objects.filter(email=email)
         if existuser:
             raise forms.ValidationError("email already taken.")
@@ -128,9 +128,9 @@ class EmailUpdateForm(forms.Form):
 
     def clean_new_email(self):
         new_email = self.cleaned_data.get('new_email')
-        pattern = re.compile(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?")
+        pattern = re.compile(r"\"?([-a-z0-9.`?{}]+@\w+\.\w+)\"?")
         if not re.match(pattern, new_email):
-            raise forms.ValidationError("enter a valid email address.")
+            raise forms.ValidationError("enter a valid email address.Concern that email must be lowercase")
         try:
             existuser = User.objects.get(email=new_email)
         except User.DoesNotExist:

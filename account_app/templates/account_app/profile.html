@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <h1 id="head" style="text-align: center;color: darkslategray;margin-top:80px;">Username: {{ user.username  }}</h1>
-    <p style="text-align: center;"><a href="{% url 'account_app:register' %}">Click here to logout</a></p>
+    <div class="bg bg-blur " ></div>
+    <h1 class="content name-front">Username: {{ user.username  }}</h1>
+    <div class="logout"><a href="{% url 'account_app:register' %}">Click here to logout</a></div>
     <div id="changepsw_frame">
 	<h1 id="head">Password update</h1>
     <form id="Form1" name = "password_form" method="POST" onsubmit="return check2()">
@@ -16,7 +17,7 @@
         <div id = "tip_4" style="color: red"></div>
         <div style="color: red">  {% if data %} {{ data }} {% endif %}</div>
         <div style="color: red">{% if form.oldpassword.errors %}{{ form.oldpassword.errors }}<br/>{% endif %}</div>
-        <p><label class="label_input">Old Password</label>
+        <p><label class="label_input">Password</label>
         <input id = "oldpassword" name = "oldpassword" type = "password" placeholder="input former password" class="text_field"></p>
 
         <div id = "tip_2" style="color: red"></div>
@@ -27,7 +28,7 @@
 
 
         <div style="color: red">{% if form.password2.errors %}{{ form.password2.errors }}<br/>{% endif %}</div>
-        <p><label class="label_input">Password Confirmation</label>
+        <p><label class="label_input">Confirm</label>
             <input id = "password2" name="password2" type="password" placeholder="input password confirmation" class="text_field"></p>
         <p>
             <div id="login_control">

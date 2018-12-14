@@ -4,22 +4,26 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
-    	<div class="picture" >
+    <div>
+    	<div class="bg bg-blur " ></div>
 
-				<div class="name">
+        <div class="content content-front">
+            Welcome to Little Weibo, <a id="forget_pwd" href="{% url 'account_app:login' %}">Click here to start!</a>
+        </div>
+<!---
+<div class="name">
 						Little Weibo
 				</div>
 
 				<div class="clickButton">
 							<a href="{% url 'account_app:login' %}">Let's start!</a>
-				</div>
+				</div>-->
 
-		</div>
+    </div>
     </body>
 
 </html>
