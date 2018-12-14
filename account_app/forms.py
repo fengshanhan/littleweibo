@@ -143,11 +143,12 @@ class EmailUpdateForm(forms.Form):
 class ReleaseForm(forms.Form):
     content = forms.CharField(label='content')
     at = forms.CharField(label='at')
-    def clean_content(self):
-        content = self.cleaned_data.get('content')
-        if len(content)<1 or len(content)>300:
-            raise forms.ValidationError("Content length incorrect!")
-        return content
-    def clean_at(self):
-        at = self.cleaned_data.get('at')
-        return at
+
+    # def clean_content(self):
+    #     content = self.cleaned_data.get('content')
+    #     if len(content)<1 or len(content)>300:
+    #         raise forms.ValidationError("Content length incorrect!")
+    #     return content
+    # def clean_at(self):
+    #     at = self.cleaned_data.get('at')
+    #     return at
