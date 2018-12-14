@@ -21,19 +21,19 @@
         <p style="color: red"> {{ error }} </p>
 
         <div id = "tip_4" style="color: red"></div>
-        <div style="color: red">  {% if data %} {{ data }} {% endif %}</div>
-        <div style="color: red">{% if form.oldpassword.errors %}{{ form.oldpassword.errors }}<br/>{% endif %}</div>
+        <p style="color: red">  {% if data %} {{ data }} {% endif %}</p>
+        <p style="color: red">{% if form.oldpassword.errors %}{{ form.oldpassword.errors }}<br/>{% endif %}</p>
         <p><label class="label_input">Password</label>
         <input id = "oldpassword" name = "oldpassword" type = "password" placeholder="input former password" class="text_field"></p>
 
         <div id = "tip_2" style="color: red"></div>
         <div id = "tip_3" style="color: red"></div>
-        <div style="color: red">{% if form.password1.errors %}{{ form.password1.errors }}<br/>{% endif %}</div>
+        <p style="color: red">{% if form.password1.errors %}{{ form.password1.errors }}<br/>{% endif %}</p>
         <p><label class="label_input">Password</label>
         <input id = "password1" name="password1" type="password" placeholder="input new password" class="text_field"></p>
 
 
-        <div style="color: red">{% if form.password2.errors %}{{ form.password2.errors }}<br/>{% endif %}</div>
+        <p style="color: red">{% if form.password2.errors %}{{ form.password2.errors }}<br/>{% endif %}</p>
         <p><label class="label_input">Confirm</label>
             <input id = "password2" name="password2" type="password" placeholder="input password confirmation" class="text_field"></p>
         <p>
@@ -79,7 +79,7 @@
         //check email
         var email = Form2.new_email.value;
         if(email != "") {
-            varreg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+            varreg = /^\w+((-\w+)|(\.\w+))*\@[a-z0-9]+((\.|-)[a-z0-9]+)*\.[a-z0-9]+$/;
             isok= varreg.test(email);
             if(!isok) {
                 var div = document.getElementById("tip_1");

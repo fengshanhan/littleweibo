@@ -22,7 +22,7 @@ class RegistrationForm(forms.Form):
     username = forms.CharField(label='Username', required=True)
     email = forms.EmailField(label='Email',)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput,required=True)
-    password2 = forms.CharField(label='Password Confirmation', widget=forms.PasswordInput,required=True)
+    password2 = forms.CharField(label='Confirm', widget=forms.PasswordInput,required=True)
 
 
     def clean_username(self):

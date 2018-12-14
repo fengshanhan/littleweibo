@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login as loginfunc, logout as logo
 from django.contrib.auth.backends import ModelBackend  # 修改验证模块
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required  #装饰器： 必须登录后才访问
-
-from .forms import RegistrationForm,PasswordUpdateForm, EmailUpdateForm,ReleaseForm
+import re
+from .forms import RegistrationForm,PasswordUpdateForm,  EmailUpdateForm,ReleaseForm
 from .models import User
 from .models import weibo
 from account_app import models
@@ -50,7 +50,22 @@ def login(request):
 
             return redirect('account_app:home')  # 重定向的函数
         else:
-            return render(request, 'account_app/login.html', {'error': "username or password has error"})
+            e = None
+            e = User.objects.filter(username=username)
+            if e:
+                return render(request, 'account_app/login.html', {'error': "illegal password."})
+            else:
+                e2 = None
+                e2 = User.objects.filter(email=username)
+                if e2:
+                    return render(request, 'account_app/login.html', {'error': "illegal password."})
+                else:
+                    pattern = re.compile(r"\"?([-a-z0-9.`?{}]+@\w+\.\w+)\"?")
+                    if re.match(pattern, username):
+                        return render(request, 'account_app/login.html', {'error': "Email not exist."})
+                    else:
+                        return render(request, 'account_app/login.html', {'error': "Username not exist."})
+
 
     else:
         return render(request, 'account_app/login.html')
