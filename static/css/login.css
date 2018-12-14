@@ -1,14 +1,104 @@
-body {
+/***body {
     background-color: #B0EAFE;
     background-size: 100%;
     background-image: url("../imgs/bear.jpeg");
     background-repeat: no-repeat;
     #background-attachment:fixed;
 }
+**/
+
+.bg {
+	background: url('../imgs/bg.jpeg');
+	height:100vh;
+	text-align: center;
+	line-height: 100vh;
+}
+
+.bg-blur {
+	float: left;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	-webkit-filter: blur(15px);
+	-moz-filter: blur(15px);
+	-o-filter: blur(15px);
+	-ms-filter: blur(15px);
+	filter: blur(15px);
+}
+.content {
+	color: #ffffff;
+	font-size: 40px;
+}
+
+ .content-front {
+	 position:absolute;
+	 left: 10px;
+	 right: 10px;
+	 height:100vh;
+	 line-height: 100vh;
+	 text-align: center;
+ }
+
+  .name-front{
+      position:absolute;
+	 left: 10px;
+	 right: 10px;
+	 height:10vh;
+	 line-height: 10vh;
+	 text-align: center;
+  }
+
+#logout {
+
+
+    text-decoration: none;
+
+     position:absolute;
+	 left: 10px;
+	 right: 10px;
+	 height:25vh;
+	 line-height: 25vh;
+	 text-align: center;
+
+
+}
+#logout a{
+    font-size: 16px;
+    color: white;
+
+    text-decoration: none;
+
+    top: 6px;
+
+}
+#logout a:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
 
 #login_frame {
     width: 400px;
     height: 300px;
+    position: absolute;
+    /*left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;*/
+    left:50%;
+    top:50%;
+    margin-left:-200px;
+    margin-top:-150px;
+    background-color: rgba(240, 255, 255, 0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+#reg_frame {
+    width: 400px;
+    height: 370px;
     position: absolute;
     /*left: 0;
     top: 0;
@@ -64,6 +154,8 @@ form p > * {
 }
 
 #head {
+    left:50%;
+    top:50%;
     margin-top: 30px;
     margin-bottom: 30px;
     color: blueviolet;

@@ -7,7 +7,7 @@
 {% block body %}
     <div class="bg bg-blur " ></div>
     <h1 class="content name-front">Username: {{ user.username  }}</h1>
-    <div class="logout"><a href="{% url 'account_app:register' %}">Click here to logout</a></div>
+    <div id="logout"><a  href="{% url 'account_app:register' %}">Click here to logout</a></div>
     <div id="changepsw_frame">
 	<h1 id="head">Password update</h1>
     <form id="Form1" name = "password_form" method="POST" onsubmit="return check2()">
