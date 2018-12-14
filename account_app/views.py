@@ -129,9 +129,8 @@ def release(request):
                                               weiboDate=weiboDate,commentNum=0,likeNum=0,transmitNum=0,
                                               state=0,transmitCon=at,image=image)
             obj.save()
-            return render(request, 'account_app/personal.html')
-        else:
-            return render(request, 'account_app/release.html');
+            //comment
+            return render(request, 'account_app/showing.html')
     else:
         return render(request, 'account_app/release.html')
 
