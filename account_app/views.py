@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required  #装饰器： 必须�
 
 from .forms import RegistrationForm, LoginForm, PasswordUpdateForm, EmailUpdateForm,ReleaseForm
 from .models import User
+from .models import weibo
 from account_app import models
 import datetime
 # 重写验证函数，让用户可以用邮箱登录
@@ -140,3 +141,8 @@ def message(request):
 # 个人主页
 def personal(request):
     return render(request, 'account_app/personal.html')
+
+#微博广场
+def weiboHome(request):
+    username=models.weibo.userName
+    datetime=models.weibo.weiboDate

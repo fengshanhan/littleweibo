@@ -28,7 +28,7 @@ def upload_to2(instance, filename):
     return '/'.join([settings.MEDIA_ROOT, instance.weiboId, filename])
 
 # 每条微博信息
-class Weibo(models.Model):
+class weibo(models.Model):
     weiboId = models.AutoField(primary_key= True) # 微博id， 自增列
     userName = models.CharField(max_length=30, null=False) # 用户名
     content = models.TextField(max_length=300,null=False, blank=False) # 微博内容， 限制300， 不允许为空
