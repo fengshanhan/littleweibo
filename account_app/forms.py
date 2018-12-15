@@ -121,3 +121,8 @@ class ReleaseForm(forms.Form):
     # def clean_at(self):
     #     at = self.cleaned_data.get('at')
     #     return at
+
+class LikeForm(forms.Form):
+    weiboId=forms.IntegerField(label='weiboId')
+    userName1 = forms.CharField(label='userName1')
+    userName2 = forms.CharField(label='userName2')

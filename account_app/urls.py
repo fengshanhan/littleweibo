@@ -13,7 +13,12 @@ urlpatterns = [
     path('register/',views.register, name='register'),
     path('me/', views.me, name='me'),
     path('profile/', views.profile, name='profile'),
-    path('home/', views.home, name='home'), # 微博主页
+
+    path('home/', views.home,name='home'), # 微博主页
+    path('home/<comment>/',views.comment,name='comment'), # 微博主页
+    path('home/<like>/', views.like,name='like'), # 微博主页
+    path('home/<notlike>/',views.notlike,name='notlike'), # 微博主页
+
     path('release/', views.release, name='release'), # 发布微博
     path('personal/', views.personal, name='personal'), # 个人主页
     path('message/', views.message, name='message'), # 消息

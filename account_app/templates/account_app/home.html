@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/like.css' %}"/>
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
@@ -27,8 +28,24 @@
             {% for weibo in weibos %}
                 <div class="frame">
                     <div class="name">@{{ weibo.userName }} :</div><br>
-                     <div class="content">{{ weibo.content }}</div><br>
+                    <div class="content">{{ weibo.content }}</div><br>
                     <div class="date">{{ weibo.weiboDate }}</div>
+                    <div class="name">comments:</div><br>
+                    <div class="content">
+                        <textarea name="comment" placeholder="Please input your comment" row="5" col="30"></textarea>
+                    </div>
+                    {%for comment in comments%}
+                        <div class="name">{{comment.userName2}}:{{comment.comContent}}</div><br>
+                        <div class="date">{{comment.comDate}}</div><br>
+                    {%endfor%}
+                    <!--<div class="like">&#10084;</div>-->
+                    <!--<div class="name">{{ weibo.likeNum }}</div>-->
+                    <form id="Form" action="" method="POST" onsubmit="return check();">
+                        {% csrf_token %} <!-- 在django的表单里，加上这个是为了防止跨站攻击 -->
+                        <button id="btn_like" name={{weibo.weiboId}} type="submit">Like{{weibo.likeNum}}</button>
+                        <button id="btn_notlike" name={{weibo.weiboId}} type="submit">Not Like</button>
+                        <button id="btn_comment" type="submit">Comment{{weibo.commentNum}}</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>
@@ -38,3 +55,13 @@
     </body>
 
 </html>
+
+<script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $(".like").click(function () {
+                $(this).toggleClass('cs');
+            })
+        })
+    </script>
+
