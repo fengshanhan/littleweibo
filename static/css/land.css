@@ -37,13 +37,10 @@
 
 
 .center{
-            position: absolute;
-	top:30%;left:40%;
+	position: absolute;
+	top:30%;left:38%;
 	text-align: center;
-
-
 }
-
 
 
 #forget_pwd {

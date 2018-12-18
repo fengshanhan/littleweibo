@@ -5,7 +5,7 @@
         <title>Release micro-blog</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
-        <link rel="stylesheet" href="/static/css/release.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/release.css' %}"/>
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
@@ -22,21 +22,20 @@
 
 <div class="center">
         <!--    在这里添加html代码    -->
-        <div class = "flex-container">
         <form class = "flex-item" enctype="multipart/form-data" method="POST" onsubmit="return check();">
             {% csrf_token %}
-            <h1>Releasing Micro-blog</h1>
-            <input type="file" name="img">
+            <h2>Releasing Micro-blog</h2>
+            <input type="file" accept="image/png,image/jpg,image/gif,image/bmp" name="img">
              <div id = "tip_1" class="tip_1"></div>
             <div class = "error">{% if form.content.errors %}{{ form.content.errors }}<br/>{% endif %}</div>
-            <h2>Enter your content:</h2>
-            <label >content</label><textarea id = "content" name="content" row="5" col="10" ></textarea><br/>
-            <h3>If you want to @ someone,use;to split:</h3>
+            <p>Enter your content:<br/></p>
+            <textarea id = "content" name="content"></textarea><br/>
+            If you want to @ someone,use;to split:<br/></p>
             <input id = "at" name="at" /><br/>
-            <label >at</label><input class = "but" type="submit" value="Send" />
+            <button class = "but" type="submit" value="Send">Send</button>
         </form>
-        </div>
 </div>
+
     <script>
         function check(){
             return checkContent()&&checkAt();
