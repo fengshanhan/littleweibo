@@ -4,8 +4,11 @@
     <head>
         <title>Personal homepage</title>
 
+        <link rel="stylesheet" type="text/css" href="{% static 'css/personal.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/initial.css' %}"/>
+
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
@@ -30,19 +33,67 @@
 
 <div id = "menu">
         <ul>
-            <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li>
-            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li>
-            <li><a href="{% url 'account_app:message' %}">Message</a></li>
-            <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li>
-            <li><a href="{% url 'account_app:profile' %}">Profile</a></li>
+            <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:message' %}">Message</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:profile' %}">Profile</a></li><li><a>|</a></li>
             <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
         </ul>
 </div>
 
 
-        <div class="center">
-            <!--    在这里添加html代码    -->
-        </div>
+            <div id="sidebar">
+			<ul>
+				<li>
+                    <h2>My Micro-blogs</h2>
+					<ul>
+						<li><a href="#">weibo1</a></li>
+						<li><a href="#">weibo1</a></li>
+						<li><a href="#">weibo1</a></li>
+					</ul>
+				</li>
+				<li>
+					<h2>My Fans</h2>
+					<ul>
+						<li><a href="#">fans</a></li>
+						<li><a href="#">fans</a></li>
+						<li><a href="#">fans</a></li>
+					</ul>
+				</li>
+				<li>
+					<h2>My concerns</h2>
+					<ul>
+						<li><a href="#">concern</a></li>
+						<li><a href="#">concern</a></li>
+						<li><a href="#">concern</a></li>
+					</ul>
+				</li>
+                <li>
+					<h2>Settings</h2>
+					<ul>
+						<li><a href="#">headshot</a></li>
+						<li><a href="#">signature</a></li>
+						<li><a href="#">email or password</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+
+ 		<div id="content">
+			<div class="post">
+				<h2 class="title"><a href="#">My Weibos</a></h2>
+				<p class="meta">Posted by <a href="#">Username</a> on March 10, 2008
+					&nbsp;&bull;&nbsp; <a href="#" class="comments">Comments (how many)</a> &nbsp;&bull;&nbsp; <a href="#" class="permalink">Full article</a></p>
+				<div class="entry">
+					<p>content</p>
+					<p>cortent2</p>
+				</div>
+			</div>
+
+		<div style="clear: both;">&nbsp;</div>
+		</div>
 
     </body>
 

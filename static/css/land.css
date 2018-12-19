@@ -2,9 +2,10 @@
 	background-image: url('../imgs/img01.jpg');
 	background-repeat: repeat-x;
 	#background-color: rgba(240, 255, 255, 0.5);
-	height:20vh;
+	height:200px;
 	width: 100%;
 	position: fixed;
+    z-index:900;
 
 }
 
@@ -106,8 +107,6 @@ div.classname a:active{样式设置} */
 	/*background-color:none;*/
 
 }
-
-
 
 
 

@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/initial.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
@@ -17,7 +18,9 @@
     <div id="header">
 		<div id="logo">
 			<div class="touxiang">
-				<img src="{% static "imgs/head.png" %}" alt="">
+				{% for i in img %}
+                    <img src="{{MEDIA_URL}}{{i.headshot}} " >
+                {% endfor %}
 			</div>
 			<p> userName <a href="#">个人简介</a></p>
 		</div>
@@ -33,11 +36,11 @@
 
 <div id = "menu">
         <ul>
-            <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li>
-            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li>
-            <li><a href="{% url 'account_app:message' %}">Message</a></li>
-            <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li>
-            <li><a href="{% url 'account_app:profile' %}">Profile</a></li>
+            <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:message' %}">Message</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:profile' %}">Profile</a></li><li><a>|</a></li>
             <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
         </ul>
 </div>

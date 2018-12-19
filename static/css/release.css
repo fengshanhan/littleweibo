@@ -1,4 +1,4 @@
-*{
+/*{
     margin-left:0;
 }
 html,body,main{
@@ -10,6 +10,7 @@ body{
     background-size:100%;
     background-position: left center;
 }
+*/
 .flex-item{
     padding: 3px;
     margin: 3px;

@@ -43,7 +43,7 @@ li a:hover:not(.active) {
 	top: 50px;
 	color: #FFFFFF;
     position: fixed;
-
+z-index:999;
 }
 
 
@@ -76,6 +76,7 @@ li a:hover:not(.active) {
 	justify-content:center;
 	overflow:hidden;
     position: relative;
+
 }
 
 .touxiang img{
@@ -142,7 +143,7 @@ li a:hover:not(.active) {
 	height: 110px;
     top:0;
     position: fixed;
-
+z-index:999;
 }
 /* Menu */
 
@@ -151,6 +152,7 @@ li a:hover:not(.active) {
 	height: 38px;
     top: 110px;
     position: fixed;
+	z-index:998;
 }
 
 #menu ul {
@@ -168,14 +170,14 @@ li a:hover:not(.active) {
 #menu a {
 	display: block;
 	margin-right: 3px;
-	padding: 17px 30px 7px 30px;
+	padding: 17px 15px 7px 15px;
 	text-decoration: none;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
 	color: #FFFFFF;
 	border: none;
-     position: relative;
+    position: relative;
 }
 
 #menu a:hover, #menu .current_page_item a {

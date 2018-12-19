@@ -16,7 +16,7 @@ class User(AbstractUser):
     created_at = models.DateField(auto_now_add=True)  # 注册日期，自动创建---永远是创建时的时间， 插入时不需要这个字段
     # 上传图像必须要安装Pillow库，如果没安装运行pip install Pillow安装
     # upload_to='upload'表示用户上传数据存储的位置，这里需要注意：在数据库中实际保存的并不是文件，而是文件存放的路径
-    headshot = models.ImageField(upload_to = upload_to, default='head.png', blank=True, null=True) # 头像，创建初始默认为head.png
+    headshot = models.ImageField(upload_to = upload_to, default='../media/head.png', blank=True, null=True) # 头像，创建初始默认为head.png
     fansNum = models.IntegerField(default=0, null=False) # 粉丝数量，创建初始默认为0
     concernsNum = models.IntegerField(default=0, null=False) # 关注数量，创建初始默认为0
     weiboNum = models.IntegerField(default=0, null=False) # 微博数量，创建初始默认为0

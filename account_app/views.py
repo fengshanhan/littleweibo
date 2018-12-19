@@ -48,8 +48,8 @@ def login(request):
                 request.session['useremail'] = e0.email # session存的email
             else:
                 request.session['useremail'] = username
+            return redirect('account_app:home')
 
-            return redirect('account_app:home')  # 重定向的函数
         else:
             e = None
             e = User.objects.filter(username=username)
@@ -180,9 +180,12 @@ def profile(request):
 
 # 主页
 def home(request):
+    e = User.objects.filter(email=request.session['useremail'])
+    e0 = e[0]  # fetch第一行数据
+    img = User.objects.filter(username=e0.username)
 
     weibos = models.weibo.objects.all().order_by('-weiboDate')
-    return render(request, 'account_app/home.html', {'weibos': weibos})
+    return render(request, 'account_app/home.html', {'weibos': weibos,'img':img})
 
 def comment(request,comment):
     comments=models.Comment.objects.all().order_by('-weiboDate')
