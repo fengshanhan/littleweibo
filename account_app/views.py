@@ -223,7 +223,6 @@ def release(request):
         
         
         '''
-
     return render(request, 'account_app/release.html')
 
 # 消息页
@@ -234,7 +233,12 @@ def message(request):
 # 个人主页
 @login_required
 def personal(request):
-    return render(request, 'account_app/personal.html')
+    # 获取头像
+    e = User.objects.filter(email=request.session['useremail'])
+    e0 = e[0]  # fetch第一行数据
+    img = User.objects.filter(username=e0.username)
+    # 获取头像完毕
+    return render(request, 'account_app/personal.html',{'img':img})
 
 '''
 #微博广场

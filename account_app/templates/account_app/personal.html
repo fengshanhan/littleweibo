@@ -12,23 +12,18 @@
         <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
     </head>
     <body>
-            <div class="bg bg-blur " ></div><div class="banner"></div>
+            <div class="bg bg-blur " ></div><div class="banner"><h1>l i t t l e&nbsp;&nbsp;&nbsp;w e i b o</h1></div>
          <!-- -->
     <div id="header">
 		<div id="logo">
 			<div class="touxiang">
-				<img src="{% static "imgs/head.png" %}" alt="">
+				{% for i in img %}
+                    <img src="{{MEDIA_URL}}{{i.headshot}} " >
+                {% endfor %}
 			</div>
 			<p> userName <a href="#">个人简介</a></p>
 		</div>
-		<div id="search">
-			<form method="get" action="">
-				<fieldset>
-				<input type="text" name="s" id="search-text" size="15" />
-				<input type="submit" id="search-submit" value="GO" />
-				</fieldset>
-			</form>
-		</div>
+
 	</div>
 
 <div id = "menu">

@@ -6,9 +6,15 @@
 	width: 100%;
 	position: fixed;
     z-index:900;
-
 }
 
+.banner h1{
+    margin-left: 730px;
+	margin-top: 30px;
+    font-size: 45px;
+    #font-weight: bold;
+    font-family: STXingkai;
+}
 
 .bg {
 	#background-image: url('../imgs/bg.jpeg');
