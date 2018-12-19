@@ -44,7 +44,8 @@ class weibo(models.Model):
 # 评论信息
 class Comment(models.Model):
     weiboId = models.IntegerField(null=False) # 所评论的微博id
-    userName = models.CharField(max_length=30, null=False) # 用户名
+    userName1 = models.CharField(max_length=30, null=False) # 被评论的用户名
+    userName2 = models.CharField(max_length=30)  # 评论的用户名
     comContent = models.TextField(null=False, blank=False) # 评论内容， 不允许为空
     comDate = models.DateTimeField(auto_now_add=True) # 评论发布日期，自动创建---永远是创建时的时间， 插入时不需要这个字段
     comGood= models.IntegerField(default=0, null=False) # 评论获得的点赞数，创建初始默认为0
@@ -57,8 +58,9 @@ class follow(models.Model):
 #点赞信息
 class like(models.Model):
     weiboId = models.IntegerField(null=False)  # 所点赞的微博id
-    userName = models.CharField(max_length=30, null=False)  # 用户名
-
+    userName1 = models.CharField(max_length=30, null=False)  # 被点赞的用户名
+    userName2 = models.CharField(max_length=30)  # 点赞的用户名#当前登陆者
+    time=models.DateField(auto_now_add=True)#点赞时间
 
 
 

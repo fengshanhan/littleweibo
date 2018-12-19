@@ -5,11 +5,12 @@ from django.contrib.auth.backends import ModelBackend  # 修改验证模块
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required  #装饰器： 必须登录后才访问
 import re
-from .forms import RegistrationForm,PasswordUpdateForm,  EmailUpdateForm,ReleaseForm
-from .models import User
+from .forms import RegistrationForm,PasswordUpdateForm,  EmailUpdateForm,ReleaseForm,LikeForm
+from .models import User,like,weibo
 from .models import weibo
 from account_app import models
 import datetime
+import time
 # 重写验证函数，让用户可以用邮箱登录
 # setting 里要有对应的配置
 class CustomBackend(ModelBackend):
@@ -44,7 +45,7 @@ def login(request):
             e = User.objects.filter(username=username)
             if e:
                 e0 = e[0]
-                request.session['useremail'] = e0.email
+                request.session['useremail'] = e0.email # session存的email
             else:
                 request.session['useremail'] = username
 
@@ -82,11 +83,52 @@ def register(request):
             # 添加到数据库
             # 必须使用objects.create_user()函数来创建对象才能加密密码,密码是加密保存而不是明文，用了这个不需要user.save()
             User.objects.create_user(username=username, email=email, password=password)
-            return redirect('/login')
+            return redirect('account_app:login')
         else:
             return render(request, 'account_app/register.html', {'form': form})
     else:
         return render(request, 'account_app/register.html')
+
+@login_required
+def like(request,like):
+    if request.method=='POST':
+        ee = User.objects.filter(username=request.session['useremail'])  # 获取user表中含有的点赞者的数据
+        username2 = ee[0].username  # 首先获得点赞者username
+        weiboId = request.POST['weiboId']#从前端获取微博号
+        e = like.objects.filter(userName2=username2,weiboId=weiboId)  # 获取like表中取出该用户点赞的该微博号的一条记录
+        u0 = e[0]  # fetch第一行数据
+        username1 = u0.userName1  # 被点赞者username
+
+        obj = models.weibo.object.create(userName1=username1, userName2=username2, weiboId=weiboId,time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        obj.save()#将点赞人，被点赞人，点赞微博，点赞时间存入数据库
+        m = weibo.objects.get(weiboId=weiboId) #从weibo表中取出该微博ID号的记录进行更改
+        e0=m[5]#取出该微博的点赞数
+        e0=e0+1
+        m.likeNum=e0
+        m.save()
+        weibos = models.weibo.objects.all().order_by('-weiboDate')
+        your_like = 'your like is :{like}'.format(like=like)
+        return render(request,your_like, {'weibos': weibos})
+    return render(request, 'account_app/home.html')
+
+@login_required
+def notlike(request,notlike):
+    if request.method=='POST':
+
+        ee = User.objects.filter(username=request.session['useremail'])  # 获取user表中含有的点赞者的数据
+        username2 = ee[0].username  # 首先获得点赞者username
+        weiboId = request.POST['weiboId']  # 从前端获取微博号
+
+        models.like.filter(weiboId=weiboId,userName2=username2).delete()#在like表中删除点赞的这条记录
+        e = weibo.objects.get(weiboId=weiboId)#获取weibo表中该微博的记录
+        e0 = e[5]  # 取出该微博的点赞数
+        e0 = e0 - 1 #点赞数减1
+        e.likeNum = e0
+        e.save()
+        weibos = models.weibo.objects.all().order_by('-weiboDate')
+        your_notlike='your notlike is :{notlike}'.format(notlike=notlike)
+        return render(request, your_notlike, {'weibos': weibos})
+    return render(request, 'account_app/home.html')
 
 
 @login_required
@@ -138,15 +180,24 @@ def profile(request):
 
 # 主页
 def home(request):
+
     weibos = models.weibo.objects.all().order_by('-weiboDate')
     return render(request, 'account_app/home.html', {'weibos': weibos})
+
+def comment(request,comment):
+    comments=models.Comment.objects.all().order_by('-weiboDate')
+    your_comment='your comment is :{comment}'.format(comment=comment)
+    return render(request,your_comment, {'comments':comments})
 
 # 发布微博页
 @login_required
 def release(request):
     if request.method == 'POST':
         content = request.POST['content']
-        obj = models.weibo.objects.create(userName='zzxz', content=content, state=0)
+        user = User.objects.filter(email=request.session['useremail'])
+        u0 = user[0]  # fetch第一行数据
+        u00=u0.username
+        obj = models.weibo.objects.create(userName=u00, content=content,weiboDate= time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),state=0)
         obj.save()
         return redirect("account_app:home")
 
@@ -182,7 +233,9 @@ def message(request):
 def personal(request):
     return render(request, 'account_app/personal.html')
 
+'''
 #微博广场
 def weiboHome(request):
     username=models.weibo.userName
     datetime=models.weibo.weiboDate
+'''

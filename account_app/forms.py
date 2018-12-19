@@ -1,21 +1,6 @@
 from django import forms
 import re
-from django.contrib.auth.backends import ModelBackend  # 修改验证模块
-from django.db.models import Q
 from .models import User
-
-
-# 重写验证函数，让用户可以用邮箱登录
-# setting 里要有对应的配置
-class CustomBackend(ModelBackend):
-    def authenticate(self, email=None, password=None, **kwargs):
-        try:
-            user = User.objects.get(Q(username=username) | Q(email=username)) #既可以邮箱也可以用户名登录
-            #user = User.objects.get(Q(email=email))  #只能邮箱登录
-            if user.check_password(password):
-                return user
-        except Exception as e:
-            return None
 
 class RegistrationForm(forms.Form):
 
@@ -121,3 +106,8 @@ class ReleaseForm(forms.Form):
     # def clean_at(self):
     #     at = self.cleaned_data.get('at')
     #     return at
+
+class LikeForm(forms.Form):
+    weiboId=forms.IntegerField(label='weiboId')
+    userName1 = forms.CharField(label='userName1')
+    userName2 = forms.CharField(label='userName2')
