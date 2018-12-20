@@ -272,6 +272,10 @@ def changeHeadshot(request):
     e0 = e[0]  # fetch第一行数据
     user = User.objects.filter(username=e0.username)
     # 获取用户对象完毕
+    if request.method == 'POST':
+        obj = User.objects.get(username=e0.username)
+        obj.headshot = request.FILES.get('file')
+        obj.save()  # 修改单条数据
     return render(request, 'account_app/changeHeadshot.html',{'user': user})
 
 

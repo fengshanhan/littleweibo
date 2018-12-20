@@ -6,13 +6,37 @@ from django.conf import settings
 from uuid import uuid4
 import os
 
-# 让上传的文件路径动态地与user的名字有关，即上传路径为 media/username/filename
+
+def mkdir(path):
+    # 去除首位空格
+    path = path.strip()
+    # 去除尾部 \ 符号
+    path = path.rstrip("\\")
+
+    # 判断路径是否存在
+    # 存在     True
+    # 不存在   False
+    isExists = os.path.exists(path)
+
+    # 判断结果
+    if not isExists:
+        # 如果不存在则创建目录
+        # 创建目录操作函数
+        os.makedirs(path)
+        return True
+    else:
+        # 如果目录存在则不创建，并提示目录已存在
+        return False
+
+
+
+# 让上传的文件路径动态地与user的名字有关，即上传路径为 media/headshot/username/filename
 def upload_to(instance, filename):
     #上传的图片都会以随机的uuid字符串命名
     ext = filename.split('.')[-1]
     filename = '{}.{}'.format(uuid4().hex, ext)
     # return the whole path to the file
-    return os.path.join([settings.MEDIA_ROOT, instance.username, filename])
+    return os.path.join("../media/headshot",instance.username, filename)
 
 # Create your models here.
 # 用户信息
@@ -29,9 +53,13 @@ class User(AbstractUser):
     description = models.TextField(default='',null=True, blank=True) # 个人简介，创建初始默认为空
 
 
-# 让上传的文件路径动态地与微博id有关，即上传路径为 media/id/filename
+# 让上传的文件路径动态地与weiboid有关，即上传路径为 media/weibo/weiboid/filename
 def upload_to2(instance, filename):
-    return '/'.join([settings.MEDIA_ROOT, instance.weiboId, filename])
+    # 上传的图片都会以随机的uuid字符串命名
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format(uuid4().hex, ext)
+    # return the whole path to the file
+    return os.path.join("../media/weibo", instance.weiboId, filename)
 
 # 每条微博信息
 class weibo(models.Model):
@@ -45,7 +73,7 @@ class weibo(models.Model):
     state = models.IntegerField(null=False) # 是否转发， 0：自己发的 1：转发的
     transmitCon = models.TextField(null=True, blank=True) # 转发评论的内容， 允许为空
     # upload_to='upload'表示用户上传数据存储的位置，这里需要注意：在数据库中实际保存的并不是文件，而是文件存放的路径
-    image = models.ImageField(upload_to='img')
+    image = models.ImageField(upload_to = upload_to2)
 
 # 评论信息
 class Comment(models.Model):
