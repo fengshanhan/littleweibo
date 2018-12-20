@@ -21,6 +21,8 @@ urlpatterns = [
 
     path('release/', views.release, name='release'), # 发布微博
     path('personal/', views.personal, name='personal'), # 个人主页
-    path('message/', views.message, name='message'), # 消息
+    path('personal/changeHeadshot', views.changeHeadshot, name='changeHeadshot'),  # 个人主页
+
+    path('RecentNews/', views.RecentNews, name='RecentNews'), # 消息
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  这句话是用来指定和映射静态文件的路径

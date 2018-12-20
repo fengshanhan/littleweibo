@@ -3,10 +3,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from django.conf import settings
+from uuid import uuid4
+import os
 
 # 让上传的文件路径动态地与user的名字有关，即上传路径为 media/username/filename
 def upload_to(instance, filename):
-    return '/'.join([settings.MEDIA_ROOT, instance.username, filename])
+    #上传的图片都会以随机的uuid字符串命名
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format(uuid4().hex, ext)
+    # return the whole path to the file
+    return os.path.join([settings.MEDIA_ROOT, instance.username, filename])
 
 # Create your models here.
 # 用户信息
@@ -54,13 +60,14 @@ class Comment(models.Model):
 class follow(models.Model):
     userName = models.CharField(max_length=30, null=False) # 用户名， 被关注的人
     fansName = models.CharField(max_length=30, null=False) # 粉丝名， 关注的人
+    time = models.DateTimeField(auto_now_add=True)  # 关注时间
 
 #点赞信息
 class like(models.Model):
     weiboId = models.IntegerField(null=False)  # 所点赞的微博id
     userName1 = models.CharField(max_length=30, null=False)  # 被点赞的用户名
     userName2 = models.CharField(max_length=30)  # 点赞的用户名#当前登陆者
-    time=models.DateField(auto_now_add=True)#点赞时间
+    time=models.DateTimeField(auto_now_add=True)#点赞时间
 
 
 

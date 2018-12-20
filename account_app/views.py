@@ -6,11 +6,11 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required  #装饰器： 必须登录后才访问
 import re
 from .forms import RegistrationForm,PasswordUpdateForm,  EmailUpdateForm,ReleaseForm,LikeForm
-from .models import User,like,weibo
-from .models import weibo
+from .models import User,like as likee,weibo,Comment
 from account_app import models
 import datetime
 import time
+from django.utils.timezone import now, timedelta
 # 重写验证函数，让用户可以用邮箱登录
 # setting 里要有对应的配置
 class CustomBackend(ModelBackend):
@@ -227,18 +227,53 @@ def release(request):
 
 # 消息页
 @login_required
-def message(request):
-    return render(request, 'account_app/message.html')
+def RecentNews(request):
+    start = now().date() + timedelta(days=0) #今天
+    # 获取当前用户对象
+    e = User.objects.filter(email=request.session['useremail'])
+    e0 = e[0]  # fetch第一行数据
+    # 获取当前用户对象
+    # 获取自己发布的微博对象集合
+    weibos = weibo.objects.filter(userName=e0.username, weiboDate__gte=start).order_by('-weiboDate')
+    # 获取微博对象完毕
+    # 获取点赞对象集合
+    likes = likee.objects.filter(Q(userName1=e0.username)|Q(userName2=e0.username),time__gte=start).order_by('-time')
+    # 获取点赞对象完毕
+    # 获取评论对象集合
+    comments = Comment.objects.filter(Q(userName1=e0.username) | Q(userName2=e0.username), comDate__gte=start).order_by('-comDate')
+    # 获取评论对象完毕
+
+    #queryset = like.objects.filter(时间字段名称__gte=start)
+    return render(request, 'account_app/RecentNews.html',{'weibos':weibos,'likes':likes,'username':e0.username,'comments':comments})
 
 # 个人主页
 @login_required
 def personal(request):
-    # 获取头像
+    # 获取用户对象
     e = User.objects.filter(email=request.session['useremail'])
     e0 = e[0]  # fetch第一行数据
-    img = User.objects.filter(username=e0.username)
-    # 获取头像完毕
-    return render(request, 'account_app/personal.html',{'img':img})
+    user = User.objects.filter(username=e0.username)
+    # 获取用户对象完毕
+
+    #微博数量
+    weibonum = user[0].weiboNum
+    #粉丝数量
+    fansnum = user[0].fansNum
+    #关注数
+    concernsnum = user[0].concernsNum
+    return render(request, 'account_app/personal.html',{'user':user, 'weibonum':weibonum,'fansnum':fansnum,'concernsnum':concernsnum})
+
+
+# 改头像
+@login_required
+def changeHeadshot(request):
+    # 获取用户对象
+    e = User.objects.filter(email=request.session['useremail'])
+    e0 = e[0]  # fetch第一行数据
+    user = User.objects.filter(username=e0.username)
+    # 获取用户对象完毕
+    return render(request, 'account_app/changeHeadshot.html',{'user': user})
+
 
 '''
 #微博广场
