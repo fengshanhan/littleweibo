@@ -202,9 +202,9 @@ def release(request):
         u00=u0.username
         image = request.FILES.get('file')
         obj = models.weibo.objects.create(userName=u00, content=content,weiboDate= time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),state=0)
-        # obj.image = image
-        # obj.save()
-        obj2 = User.objects.get(username=u00)
+        obj.image = image
+        obj.save()
+        obj2 = User.objects.get(userName=u00)
         obj2.weiboNum = obj2.weiboNum + 1
         obj2.save()
         return redirect("account_app:home")
