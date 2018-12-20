@@ -31,8 +31,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     ("css", os.path.join(STATIC_ROOT, 'css')),
     ("imgs", os.path.join(STATIC_ROOT, 'imgs')),
-    ("js", os.path.join(STATIC_ROOT, 'js')),
-
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')     #设置静态文件路径为主目录下的media文件夹

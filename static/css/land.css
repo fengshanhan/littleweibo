@@ -41,7 +41,7 @@
 }
 
 .content {
-	color: black;
+	color: #ffffff;
 	font-size: 40px;
 }
 
@@ -65,7 +65,7 @@
 
 #forget_pwd {
     font-size: 40px;
-    color: black;
+    color: white;
     text-decoration: none;
     top: 6px;
 

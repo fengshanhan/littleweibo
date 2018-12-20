@@ -17,7 +17,7 @@
     <div id="header">
 		<div id="logo">
 			<div class="touxiang">
-				{% for i in user %}
+				{% for i in img %}
                     <img src="{{MEDIA_URL}}{{i.headshot}} " >
                 {% endfor %}
 			</div>
@@ -30,7 +30,7 @@
         <ul>
             <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li><li><a>|</a></li>
             <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li><li><a>|</a></li>
-            <li><a href="{% url 'account_app:RecentNews' %}">Recent News</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:message' %}">Message</a></li><li><a>|</a></li>
             <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li><li><a>|</a></li>
             <li><a href="{% url 'account_app:profile' %}">Profile</a></li><li><a>|</a></li>
             <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
@@ -41,7 +41,7 @@
             <div id="sidebar">
 			<ul>
 				<li>
-                    <h2>My Weibos&nbsp;&nbsp;({{ weibonum }})</h2>
+                    <h2>My Micro-blogs</h2>
 					<ul>
 						<li><a href="#">weibo1</a></li>
 						<li><a href="#">weibo1</a></li>
@@ -49,7 +49,7 @@
 					</ul>
 				</li>
 				<li>
-					<h2>My Fans&nbsp;&nbsp;({{ fansnum }})</h2>
+					<h2>My Fans</h2>
 					<ul>
 						<li><a href="#">fans</a></li>
 						<li><a href="#">fans</a></li>
@@ -57,7 +57,7 @@
 					</ul>
 				</li>
 				<li>
-					<h2>My concerns&nbsp;&nbsp;({{ concernsnum }})</h2>
+					<h2>My concerns</h2>
 					<ul>
 						<li><a href="#">concern</a></li>
 						<li><a href="#">concern</a></li>
@@ -67,9 +67,9 @@
                 <li>
 					<h2>Settings</h2>
 					<ul>
-						<li><a href="{% url 'account_app:changeHeadshot' %}">headshot</a></li>
+						<li><a href="#">headshot</a></li>
 						<li><a href="#">signature</a></li>
-                        <li><a href="{% url 'account_app:profile' %}">email or password</a></li>
+						<li><a href="#">email or password</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -79,14 +79,11 @@
  		<div id="content">
 			<div class="post">
 				<h2 class="title"><a href="#">My Weibos</a></h2>
-
-
-
-
-
-
-
-
+				<p class="meta">Posted by <a href="#">Username</a> on March 10, 2008
+					&nbsp;&bull;&nbsp; <a href="#" class="comments">Comments (how many)</a> &nbsp;&bull;&nbsp; <a href="#" class="permalink">Full article</a></p>
+				<div class="entry">
+					<p>content</p>
+					<p>cortent2</p>
 				</div>
 			</div>
 
