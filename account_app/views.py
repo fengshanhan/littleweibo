@@ -1,5 +1,5 @@
-# from django.http import HttpResponse
-from django.shortcuts import render, redirect  # 返回网页需要import的包
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, reverse  # 返回网页需要import的包
 from django.contrib.auth import authenticate, login as loginfunc, logout as logoutfunc  # 从授权app导入模块
 from django.contrib.auth.backends import ModelBackend  # 修改验证模块
 from django.db.models import Q
@@ -271,11 +271,13 @@ def changeHeadshot(request):
     e = User.objects.filter(email=request.session['useremail'])
     e0 = e[0]  # fetch第一行数据
     user = User.objects.filter(username=e0.username)
+    result = ""
     # 获取用户对象完毕
     if request.method == 'POST':
         obj = User.objects.get(username=e0.username)
         obj.headshot = request.FILES.get('file')
         obj.save()  # 修改单条数据
+        return redirect('account_app:personal')
     return render(request, 'account_app/changeHeadshot.html',{'user': user})
 
 
