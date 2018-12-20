@@ -31,7 +31,8 @@
         <form class = "flex-item" enctype="multipart/form-data" method="POST" onsubmit="return check();">
             {% csrf_token %}
             <h2>Releasing Micro-blog</h2>
-            <input type="file" accept="image/png,image/jpg,image/gif,image/bmp" name="img">
+            微博图片:<input type="file" name="file"  onchange="preview(this)"><br/>
+            <div id="preview"></div>
              <div id = "tip_1" class="tip_1"></div>
             <div class = "error">{% if form.content.errors %}{{ form.content.errors }}<br/>{% endif %}</div>
             <p>Enter your content:<br/></p>
@@ -41,8 +42,8 @@
             <button class = "but" type="submit" value="Send">Send</button>
         </form>
 </div>
-
-    <script>
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript">
         function check(){
             return checkContent()&&checkAt();
         }
@@ -64,6 +65,20 @@
                 return true;
             }
         }
+
+
+    function preview(file) {
+        var prevDiv = document.getElementById('preview');
+        if (file.files && file.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+            }
+            reader.readAsDataURL(file.files[0]);
+        } else {
+            prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+        }
+    }
     </script>
     </body>
 </html>
