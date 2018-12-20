@@ -1,74 +1,17 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+
 <html>
-    <head>
-        <title>Release micro-blog</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/initial.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/release.css' %}"/>
-        <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
-    </head>
-    <body>
-
-         <div class="bg bg-blur " ></div><div class="banner"><h1>l i t t l e&nbsp;&nbsp;&nbsp;w e i b o</h1></div>
-         <!-- -->
-
-
-<div id = "menu">
-        <ul>
-            <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li><li><a>|</a></li>
-            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li><li><a>|</a></li>
-            <li><a href="{% url 'account_app:RecentNews' %}">Recent News</a></li><li><a>|</a></li>
-            <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li><li><a>|</a></li>
-            <li><a href="{% url 'account_app:profile' %}">Profile</a></li><li><a>|</a></li>
-            <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
-        </ul>
-</div>
-
-<div class="center">
-        <!--    在这里添加html代码    -->
-        <form class = "flex-item" enctype="multipart/form-data" method="POST" onsubmit="return check();">
-            {% csrf_token %}
-            <h2>Releasing Micro-blog</h2>
-            <input type="file" name="file" id="photoSrc" value="微博图片:" onchange="photoCheck(this)"/>
-    <div>
-    <img src="" id="imgShow" style="width:100px;height:100px"></img>
-    </div>
-             <div id = "tip_1" class="tip_1"></div>
-            <div class = "error">{% if form.content.errors %}{{ form.content.errors }}<br/>{% endif %}</div>
-            <p>Enter your content:<br/></p>
-            <textarea id = "content" name="content"></textarea><br/>
-            If you want to @ someone,use;to split:<br/></p>
-            <input id = "at" name="at" /><br/>
-            <button class = "but" type="submit" value="Send">Send</button>
-        </form>
-</div>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>图片效验</title>
+</head>
 <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-    <script type="text/javascript">
-        function check(){
-            return checkContent()&&checkAt();
-        }
-        function checkAt(){
-            return true;
-        }
-        function checkContent(){
-            content = document.getElementById("content");
-            var reg =/^.{1,300}$/;
-            if(!reg.test(content.value)){
-                alert("failed");
-                if(content.value == ""){
-                    document.getElementById('tip_1').innerHTML = "Please input content!";
-                }else{
-                    document.getElementById('tip_1').innerHTML = "Content too long!";
-                }
-                return false;
-            }else{
-                return true;
-            }
-        }
-
-         function photoCheck(obj){
+<script type="text/javascript">
+    /*
+     *图片验证
+     */
+    function photoCheck(obj){
         var ff = $("#photoSrc").val();
         if(ff == null || ff == ""){
             alert("请选择文件");
@@ -192,6 +135,17 @@
          }
     }
 
-    </script>
-    </body>
+</script>
+<body>
+<form enctype="multipart/form-data" action="" method="POST">
+    {% csrf_token %}
+    <input type="file" name="file" id="photoSrc" value="文件上传" onchange="photoCheck(this)"/>
+    <div>
+    //显示图片的div
+    <img src="" id="imgShow" style="width:100px;height:100px"></img>
+    </div>
+<button type="submit">Commit</button>
+</form>
+
+</body>
 </html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Recent News</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/initial.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/land.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/news.css' %}"/>
+        <!----<img src="{% static "imgs/bg.jpg" %}"/>----->
+    </head>
+    <body>
+               <div class="bg bg-blur " ></div><div class="banner"><h1>l i t t l e&nbsp;&nbsp;&nbsp;w e i b o</h1></div>
+         <!-- -->
+
+
+<div id = "menu">
+        <ul>
+            <li><a class="active" href="{% url 'account_app:home' %}">Homepage</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:release' %}">Release micro-blog</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:RecentNews' %}">Recent News</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:personal' %}">Personal homepage</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:profile' %}">Profile</a></li><li><a>|</a></li>
+            <li><a href="{% url 'account_app:logout' %}">Log out</a></li>
+        </ul>
+</div>
+
+
+         <div class="center">
+            <!--    在这里添加html代码    -->
+
+
+
+             <!--
+             今日
+             出现的赞：
+             xxx在某年某月某日赞了你
+             你在某年某月赞了xxx
+
+             xxx在某年某月某日评论了你
+             你在某年某月评论了xxx
+
+             你在某年某月某日发布了一条微博
+
+
+             你在某年某月某日关注了xxx
+
+
+
+
+
+             评论
+
+
+
+             -->
+
+
+             {% for weibo in weibos %}
+                 <div class="frame">
+                    <div class="content">You posted a weibo at {{ weibo.weiboDate }}</div>
+                </div>
+             {% endfor %}
+
+             {% for like in likes %}
+                {% ifequal like.userName1 '{{ username }}' %}
+　　　　　　          <div class="frame">
+                        <div class="content">You got a like at {{ like.time }}</div>
+                    </div>
+　　　　            {% else %}
+                    <div class="frame">
+                        <div class="content">You gave {{ like.userName2 }} a like at {{ like.time }}</div>
+                    </div>
+　　　　          {% endifequal %}
+              {% endfor %}
+
+             {% for comment in comments %}
+                {% ifequal comment.userName1 '{{ username }}' %}
+　　　　　　          <div class="frame">
+                        <div class="content">{{ comment.userName2 }} commented on you at {{ comment.conDate }}</div>
+                    </div>
+　　　　            {% else %}
+                    <div class="frame">
+                        <div class="content">You commented on {{ comment.userName2 }} at {{ comment.conDate }}</div>
+                    </div>
+　　　　          {% endifequal %}
+              {% endfor %}
+
+
+
+        </div>
+
+
+    </body>
+
+</html>
