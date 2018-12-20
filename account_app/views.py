@@ -6,8 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required  #装饰器： 必须登录后才访问
 import re
 from .forms import RegistrationForm,PasswordUpdateForm,  EmailUpdateForm,ReleaseForm,LikeForm
-from .models import User,like,weibo
-from .models import weibo
+from .models import User
 from account_app import models
 import datetime
 import time
@@ -88,17 +87,16 @@ def register(request):
             return render(request, 'account_app/register.html', {'form': form})
     else:
         return render(request, 'account_app/register.html')
-
+"""
 @login_required
 def like(request,like):
     if request.method=='POST':
-        ee = User.objects.filter(username=request.session['useremail'])  # 获取user表中含有的点赞者的数据
+        ee = User.objects.filter(email=request.session['useremail'])  # 获取user表中含有的点赞者的数据
         username2 = ee[0].username  # 首先获得点赞者username
         weiboId = request.POST['weiboId']#从前端获取微博号
         e = like.objects.filter(userName2=username2,weiboId=weiboId)  # 获取like表中取出该用户点赞的该微博号的一条记录
         u0 = e[0]  # fetch第一行数据
         username1 = u0.userName1  # 被点赞者username
-
         obj = models.weibo.object.create(userName1=username1, userName2=username2, weiboId=weiboId,time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         obj.save()#将点赞人，被点赞人，点赞微博，点赞时间存入数据库
         m = weibo.objects.get(weiboId=weiboId) #从weibo表中取出该微博ID号的记录进行更改
@@ -110,8 +108,9 @@ def like(request,like):
         your_like = 'your like is :{like}'.format(like=like)
         return render(request,your_like, {'weibos': weibos})
     return render(request, 'account_app/home.html')
+"""
 
-@login_required
+"""@login_required
 def notlike(request,notlike):
     if request.method=='POST':
 
@@ -129,7 +128,7 @@ def notlike(request,notlike):
         your_notlike='your notlike is :{notlike}'.format(notlike=notlike)
         return render(request, your_notlike, {'weibos': weibos})
     return render(request, 'account_app/home.html')
-
+"""
 
 @login_required
 def me(request):
@@ -180,17 +179,87 @@ def profile(request):
 
 # 主页
 def home(request):
+    if request.method=='POST':
+        weiboId = request.POST['weiboId']  # 从前端获取微博号
+
+        if "view" in request.POST:
+            print("now in views")
+            # 获取当前微博的所有评论并返回
+            comments = models.Comment.objects.filter(weiboId=weiboId)
+            print("comments:")
+            print(comments)
+            weibo=models.weibo.objects.filter(weiboId=weiboId)
+            e = User.objects.filter(email=request.session['useremail'])
+            e0 = e[0]  # fetch第一行数据
+            img = User.objects.filter(username=e0.username)
+            weibos = models.weibo.objects.all().order_by('-weiboDate')
+            return render(request,'account_app/comments.html',{'weibo':weibo,'img':img,'comments':comments})
+
+        elif "like" in request.POST:
+            print("now in like")
+            ee = User.objects.filter(email=request.session['useremail'])  # 获取当前用户信息
+            print("username")
+            username = ee[0].username  # 首先获得点赞者username
+
+            print(username)
+            print(weiboId)
+            try:
+
+                e = models.like.objects.get(userName=username,weiboId=weiboId)  # 获取like表中取出该用户点赞的该微博号的一条记录
+
+                if e.state == 1:
+                    e.state = 0
+                    e.save()
+                    m = models.weibo.objects.get(weiboId=weiboId)  # 从weibo表中取出该微博ID号的记录进行更改
+                    print(m.content)
+                    e0 = m.likeNum  # 取出该微博的点赞数
+                    e0 = e0 - 1
+                    m.likeNum = e0
+                    m.save()
+                elif e.state == 0:
+                    e.state = 1
+                    print("!!!!!")
+                    e.save()
+                    m = models.weibo.objects.get(weiboId=weiboId)  # 从weibo表中取出该微博ID号的记录进行更改
+                    e0 = m.likeNum  # 取出该微博的点赞数
+                    e0 = e0 + 1
+                    m.likeNum = e0
+                    m.save()
+            except Exception as e:
+                #不存在点赞记录
+                obj = models.like.objects.create(weiboId=weiboId,userName=username,state=1)
+                obj.save()
+                m = models.weibo.objects.get(weiboId=weiboId) #从weibo表中取出该微博ID号的记录进行更改
+                e0=m.likeNum#取出该微博的点赞数
+                e0=e0+1
+                m.likeNum=e0
+                m.save()
+
+        elif "comment" in request.POST:
+            print("now in comments")
+            weiboId = request.POST['weiboId']  # 从前端获取微博号
+            comment = request.POST['comments']
+            ee = User.objects.filter(email=request.session['useremail'])  # 获取当前用户信息
+            #print("username")
+            username = ee[0].username  # 首先获得评论者username
+            obj=models.Comment.objects.create(weiboId=weiboId,userName=username,comContent=comment,comDate= time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),comGood=0)
+            obj.save()
+
+            m = models.weibo.objects.get(weiboId=weiboId)  # 从weibo表中取出该微博ID号的记录进行更改
+            e0 = m.commentNum  # 取出该微博的点赞数
+            e0 = e0 + 1
+            m.commentNum = e0
+            m.save()
+
+
     e = User.objects.filter(email=request.session['useremail'])
     e0 = e[0]  # fetch第一行数据
     img = User.objects.filter(username=e0.username)
-
     weibos = models.weibo.objects.all().order_by('-weiboDate')
     return render(request, 'account_app/home.html', {'weibos': weibos,'img':img})
 
-def comment(request,comment):
-    comments=models.Comment.objects.all().order_by('-weiboDate')
-    your_comment='your comment is :{comment}'.format(comment=comment)
-    return render(request,your_comment, {'comments':comments})
+def comments(request):
+    return render(request, 'account_app/comments.html')
 
 # 发布微博页
 @login_required

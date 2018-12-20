@@ -41,14 +41,14 @@ class weibo(models.Model):
     # upload_to='upload'表示用户上传数据存储的位置，这里需要注意：在数据库中实际保存的并不是文件，而是文件存放的路径
     image = models.ImageField(upload_to='img')
 
+
 # 评论信息
 class Comment(models.Model):
     weiboId = models.IntegerField(null=False) # 所评论的微博id
-    userName1 = models.CharField(max_length=30, null=False) # 被评论的用户名
-    userName2 = models.CharField(max_length=30)  # 评论的用户名
-    comContent = models.TextField(null=False, blank=False) # 评论内容， 不允许为空
+    userName = models.CharField(max_length=30)  # 评论的用户名
+    comContent = models.CharField(null=False, blank=False,max_length=300) # 评论内容， 不允许为空
     comDate = models.DateTimeField(auto_now_add=True) # 评论发布日期，自动创建---永远是创建时的时间， 插入时不需要这个字段
-    comGood= models.IntegerField(default=0, null=False) # 评论获得的点赞数，创建初始默认为0
+    comGood = models.IntegerField(default=0, null=False) # 评论获得的点赞数，创建初始默认为0
 
 #关注信息
 class follow(models.Model):
@@ -57,10 +57,10 @@ class follow(models.Model):
 
 #点赞信息
 class like(models.Model):
-    weiboId = models.IntegerField(null=False)  # 所点赞的微博id
-    userName1 = models.CharField(max_length=30, null=False)  # 被点赞的用户名
-    userName2 = models.CharField(max_length=30)  # 点赞的用户名#当前登陆者
-    time=models.DateField(auto_now_add=True)#点赞时间
+    weiboId = models.IntegerField(null=False)  # 所点赞的微博id  可以通过当前微博id得到用户ID
+    userName = models.CharField(max_length=30)  # 点赞的用户名#当前登陆者
+    state=models.IntegerField(default=1) #当前状态，0为没建立联系，1为建立联系
+    #time=models.DateField(auto_now_add=True)#点赞时间
 
 
 

@@ -109,5 +109,12 @@ class ReleaseForm(forms.Form):
 
 class LikeForm(forms.Form):
     weiboId=forms.IntegerField(label='weiboId')
-    userName1 = forms.CharField(label='userName1')
-    userName2 = forms.CharField(label='userName2')
+    userName = forms.CharField(label='userName') #当前用户ID
+    state = forms.IntegerField(label='state')
+
+class CommentForm(forms.Form):
+    weiboId = forms.IntegerField(label='weiboId')  # 所评论的微博id
+    userName = forms.CharField(label='userName')  # 评论的用户名
+    comContent = forms.CharField(label='comContent')  # 评论内容， 不允许为空
+    comDate = forms.DateTimeField(label='comDate')  # 评论发布日期，自动创建---永远是创建时的时间， 插入时不需要这个字段
+    comGood = forms.IntegerField(label='comGood')  # 评论获得的点赞数，创建初始默认为0

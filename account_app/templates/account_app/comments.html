@@ -47,27 +47,29 @@
 </div>
         <div class="center">
             <!--    在这里添加html代码    -->
-            {% for weibo in weibos %}
-                    <form id="Form" action="" method="POST" onsubmit="return check();">
-                        <div class="frame">
-                        <input class="name" name="weiboId" value="{{ weibo.weiboId }}">
-                        <div class="name">@{{ weibo.userName }} :</div><br>
-                        <div class="content">{{ weibo.content }}</div><br>
-                        <div class="date">{{ weibo.weiboDate }}</div>
-                        <div class="name">comments:</div><br>
 
-                        {% csrf_token %} <!-- 在django的表单里，加上这个是为了防止跨站攻击 -->
-                        <div class="content">
-                            <input type="text" name="comments" placeholder="Please input your comment">
-                        </div>
-                        <button id="btn_like" type="submit" name="like">Like{{weibo.likeNum}}</button>
-                        <button id="btn_comment" type="submit" name="comment">Comment{{weibo.commentNum}}</button>
-                        <button id="btn_view" type="submit" name="view" href="{% url 'account_app:comments' %}">View Comment</button>
-                        </div>
+                    <form action="" method="POST" onsubmit="return">
+                         {% csrf_token %} <!-- 在django的表单里，加上这个是为了防止跨站攻击 -->
+                        {% for w in weibo %}
+                            <div class="frame">
+                            <input class="name" name="weiboId" value="{{ weibo.weiboId }}">
+                            <div class="name">Weibo Content:</div><br>
+                            <div class="name">@{{ w.userName }} :</div><br>
+                            <div class="content">{{ w.content }}</div><br>
+                            <div class="date">{{ w.weiboDate }}</div>
+                            <div class="name">comments:</div><br>
+
+                            {% for comment in comments %}
+                                <div class="name">Comment usename:{{comment.userName}}:</div><br>
+                                <div class="content">{{comment.comContent}}</div><br>
+                                <div class="date">commentDate:{{comment.comDate}}</div><br>
+                                <!--<div class="name">commentLike:{{comment.comGood}}</div><br>-->
+                            {% endfor %}
+
+                            <a href="{% url 'account_app:home' %}">Return to home page</a>
+                            </div>
+                        {% endfor %}
                     </form>
-            {% endfor %}
-
-        </div>
 
         </div>
 
@@ -76,5 +78,4 @@
     </body>
 
 </html>
-
 
